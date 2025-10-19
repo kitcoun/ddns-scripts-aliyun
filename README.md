@@ -2,6 +2,8 @@
 
 ddns-scripts-aliyun是OpenWrt软件包ddns-scripts的扩展, 实现阿里云域名的动态DNS解析。
 
+从官方而来，修复了签名问题
+
 ## 使用前提
 
 在使用该脚本之前，需要满足以下前提
@@ -11,33 +13,19 @@ ddns-scripts-aliyun是OpenWrt软件包ddns-scripts的扩展, 实现阿里云域�
 - 已申请好阿里云的AccessKey，推荐使用子账户进行配置
 - 为子账户配置了`AliyunDNSReadOnlyAccess`和`AliyunDNSFullAccess`的权限策略
 
-## 安装之前
-
-如果网络环境较差，推荐先更换OpenWrt的软件源，可以加快下载软件包的速度。这里使用[阿里云](https://developer.aliyun.com/mirror/openwrt?spm=a2c6h.13651102.0.0.56cb1b11HkJNeY)的软件源。
-
-终端执行以下命令即可完成更换：
-
-```bash
-sed -i 's_downloads.openwrt.org_mirrors.aliyun.com/openwrt_' /etc/opkg/distfeeds.conf
-```
-
 ## 安装
 
-首先在[Release页面](https://github.com/renndong/ddns-scripts-aliyun/releases)下载好ipk软件包
-
-### LuCI后台安装（推荐
-
-1. 进入LuCI管理后台，选择「系统」>「软件包」，进入软件包管理界面
-2. 点击「更新」按钮，更新软件包索引
-3. 点击「上传软件包」按钮，选择下载好的ipk文件，上传后选择安装即可
-
-### 终端安装
-
-1. 本地终端执行 `scp -O {ipk软件包路径} root@{路由器IP}:/root` 将软件包上传到路由器`/root`目录下
-2. 进入路由器终端，执行命令`opkg update`更新软件包索引
-3. 执行命令`opkg install {ipk软件包路径}`即可完成安装
-
-安装完成后，即可在动态DNS服务的DNS提供商列表中，看到`aliyun.com`选项。
+- 手动安装
+```sh
+cd /usr/lib/ddns
+rm /usr/lib/ddns/update_aliyun_com.sh
+vim update_aliyun_com.sh
+# 按 "I" 键
+# 复制本项目的update_aliyun_com.sh代码到其中
+# 按 "esc" 键
+# 输入 ":wq "
+# 按回车键
+```
 
 ## 配置使用
 
@@ -63,4 +51,5 @@ sed -i 's_downloads.openwrt.org_mirrors.aliyun.com/openwrt_' /etc/opkg/distfeeds
 
 其他一些配置依据自己的需求配置即可，配置完保存并应用，过一会后即可在阿里云DNS控制台看到已更新的记录值。
 
-有问题欢迎提[Issue](https://github.com/renndong/ddns-scripts-aliyun/issues).
+来源:https://github.com/openwrt/packages/blob/master/net/ddns-scripts/files/usr/lib/ddns/update_aliyun_com.sh
+签名:https://help.aliyun.com/zh/sdk/product-overview/v3-request-structure-and-signature?spm=a2c4g.11186623.help-menu-262060.d_0_4_2.63da3261HlgOyd
