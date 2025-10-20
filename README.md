@@ -19,7 +19,7 @@ ddns-scripts-aliyun是OpenWrt软件包ddns-scripts的扩展, 实现阿里云域�
 ```sh
 cd /usr/lib/ddns
 rm /usr/lib/ddns/update_aliyun_com.sh
-vim update_aliyun_com.sh
+vim /usr/lib/ddns/update_aliyun_com.sh
 # 按 "I" 键
 # 复制本项目的update_aliyun_com.sh代码到其中
 # 按 "esc" 键
