@@ -39,15 +39,34 @@ sh -n /usr/lib/ddns/update_aliyun_com.sh
 
 ### 1. 上级设备（主路由）设置
 
+#### 通过ui设置(可能有问题)
 1. 进入 **DDNS 高级设置**
 2. **IP 地址来源**：选择 `接口`
 3. **接口**：选择 `wan`（根据实际 WAN 口名称调整）
+
+### 2. 通过脚本
+#### 步骤 1：创建 IPv6 地址获取脚本
+
+在下级设备中创建脚本 `wanv6script.sh`（建议路径：`/usr/lib/ddns/wanv6script.sh`）
+```bash
+#!/bin/sh
+
+# 指定接口，比如wan
+INTERFACE="wan"
+ip -6 addr show dev $INTERFACE scope global | grep -oE '2409:[0-9a-f:]+' | head -n 1
+```
+
+赋予执行权限：
+
+```bash
+chmod +x /usr/lib/ddns/wanv6script.sh
+```
 
 ### 2. 下级设备设置
 
 #### 步骤 1：创建 IPv6 地址获取脚本
 
-在下级设备中创建脚本 `v6script.sh`（建议路径：`/usr/lib/ddns/v6script.sh`）
+在下级设备中创建脚本 `lanv6script.sh`（建议路径：`/usr/lib/ddns/lanv6script.sh`）
 
 ```bash
 #!/bin/sh
@@ -60,7 +79,7 @@ ip -6 neigh show dev br-lan | grep -i "$SUFFIX" | awk '/^2409:[0-9a-f]+:/ {print
 赋予执行权限：
 
 ```bash
-chmod +x /usr/lib/ddns/v6script.sh
+chmod +x /usr/lib/ddns/lanv6script.sh
 ```
 
 #### 步骤 2：配置 DDNS 高级设置
