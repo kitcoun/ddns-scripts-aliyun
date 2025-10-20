@@ -59,23 +59,8 @@ encode_url_component() {
 	printf -- '%s' "$str2"
 }
 
-# calculate signature for Aliyun API request
-calculate_signature() {
-	local canonicalized_query_string="$1"
-	local string_to_sign signature
-	
-	# build string to sign according to Aliyun signature v1.0 specification
-	string_to_sign="GET&$(encode_url_component "/")&$(encode_url_component "$canonicalized_query_string")"
-	
-	# calculate HMAC-SHA1 signature and encode with base64
-	signature="$(printf -- '%s' "$string_to_sign" | openssl sha1 -binary -hmac "$password&" | openssl base64)"
-	
-	# return URL encoded signature parameter
-	printf -- '%s' "Signature=$(encode_url_component "$signature")"
-}
-
 do_request() {
-	local common_params canonicalized_query_string signature
+	local common_params canonicalized_query_string string_to_sign signature
 	local program http_code err
 	common_params="Format=JSON
 				  Version=2015-01-09
@@ -88,8 +73,10 @@ do_request() {
 	# build canonicalized query string, notice we use ascii order when sorting
 	canonicalized_query_string="$(printf -- '%s' "$common_params $*" | sed 's/\s\+/\n/g' | LC_COLLATE=C sort | xargs | sed 's/\s/\&/g')"
 
-	# calculate signature using dedicated method
-	signature="$(calculate_signature "$canonicalized_query_string")"
+	# calculate signature
+	string_to_sign="GET&$(encode_url_component "/")&$(encode_url_component "$canonicalized_query_string")"
+	signature="$(printf -- '%s' "$string_to_sign" | openssl sha1 -binary -hmac "$password&" | openssl base64)"
+	signature="Signature=$(encode_url_component "$signature")"
 
 	program="$CURL -sSL -o $DATFILE --stderr $ERRFILE -w '%{http_code}' \"$__URLBASE$canonicalized_query_string&$signature\""
 
