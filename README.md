@@ -54,9 +54,9 @@ sh -n /usr/lib/ddns/update_aliyun_com.sh
 # 替换为下级设备的 MAC 地址（从设备首页查看）
 SUFFIX="30:9c:23:68:db:28"
 # 从 br-lan 接口的邻居列表中提取匹配的 IPv6 地址
-ip -6 addr show dev $INTERF | awk '/inet6/ && !/fe80::|deprecated/ {print $2}' | cut -d':' -f1-4 | sed "s/$/:$SUFFIX/"
+ip -6 addr show dev br-lan | awk '/inet6/ && !/fe80::|deprecated/ {print $2}' | cut -d':' -f1-4 | sed "s/$/:$SUFFIX/"
 # 如果你在接口的全局网络选项中设置了IPv6 ULA 前缀，则使用上述脚本会获取到2个ip，其中一个是本地唯一地址，需要调整awk过滤条件。以下命令只会获取以2xxx开头的地址。
-ip -6 addr show dev $INTERF | awk '/inet6 2/ && !/fe80::|deprecated/ {print $2}' | cut -d':' -f1-4 | sed "s/$/:$SUFFIX/"
+ip -6 addr show dev br-lan | awk '/inet6 2/ && !/fe80::|deprecated/ {print $2}' | cut -d':' -f1-4 | sed "s/$/:$SUFFIX/"
 ```
 
 赋予执行权限：
