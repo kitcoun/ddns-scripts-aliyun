@@ -4,8 +4,9 @@
 
 本指南适用于基于 OpenWRT 系统，通过 `ddns-scripts` 组件结合阿里云 DNS API 实现动态 DNS 解析的场景，支持 IPv6 地址自动更新。
 
-测试版本动态 DNS 版本
-2.8.2-r64
+测试:
+openwrt版本：24.10.3
+DDNS 版本：2.8.2-r64
 
 ## 环境准备
 
@@ -52,7 +53,7 @@ sh -n /usr/lib/ddns/update_aliyun_com.sh
 
 # 指定接口，比如wan
 INTERFACE="wan"
-ip -6 addr show dev $INTERFACE scope global | grep -oE '2409:[0-9a-f:]+' | head -n 1
+ifstatus $INTERFACE | jsonfilter -e '@["ipv6-address"][*]["address"]' | grep -E '^2[0-9a-f][0-9a-f]?[0-9a-f]?' | grep -v '::'
 ```
 
 赋予执行权限：
