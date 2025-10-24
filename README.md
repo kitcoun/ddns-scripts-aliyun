@@ -67,7 +67,7 @@ chmod +x /usr/lib/ddns/wanv6script.sh
 #### 创建 IPv6 地址获取脚本
 
 在下级设备中创建脚本 `lanv6script.sh`（建议路径：`/usr/lib/ddns/lanv6script.sh`）
-
+- 如果设备长期关机可以使用`lanv6script.sh`脚本,避免一直ip而持续执行程序
 ```bash
 #!/bin/sh
 # 替换为下级设备的 MAC 地址（从设备首页查看）
