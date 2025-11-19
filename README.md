@@ -83,7 +83,7 @@ ip -6 neigh show dev br-lan | grep -i "$SUFFIX" | awk '/^2409:[0-9a-f]+:/ && /RE
 chmod +x /usr/lib/ddns/lanv6script.sh
 ```
 
-#### 使用脚本配置 DDNS 高级设置
+### 使用脚本配置 DDNS 高级设置
 
 1. 进入 **DDNS 高级设置**
 2. **IP 地址来源**：选择 `脚本`
