@@ -38,7 +38,7 @@ sh -n /usr/lib/ddns/update_aliyun_com.sh
 
 ## 设备配置
 
-#### 1. 本路由设置
+### 1. 本路由设置
 
 #### 1. 通过ui设置(可能有问题)
 1. 进入 **DDNS 高级设置**
