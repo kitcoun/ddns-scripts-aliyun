@@ -38,7 +38,7 @@ sh -n /usr/lib/ddns/update_aliyun_com.sh
 
 ## 设备配置
 
-#### 1. 上级设备（主路由）设置
+#### 1. 本路由设置
 
 #### 1. 通过ui设置(可能有问题)
 1. 进入 **DDNS 高级设置**
@@ -62,7 +62,7 @@ ifstatus $INTERFACE | jsonfilter -e '@["ipv6-address"][*]["address"]' | grep -E 
 chmod +x /usr/lib/ddns/wanv6script.sh
 ```
 
-### 2. 下级设备设置
+### 2. 路由下级设备设置
 
 #### 创建 IPv6 地址获取脚本
 
