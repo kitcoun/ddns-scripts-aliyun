@@ -42,7 +42,7 @@ sh -n /usr/lib/ddns/update_aliyun_com.sh
 ### 界面设置
 第一个域名填写子域名(需要更新的域名)如：`ly.test.com`
 
-第二个域名填写主域名如：`test.com`
+第二个域名填写子域名如：`ly@test.com`
 
 ### 1. 本路由设置
 
