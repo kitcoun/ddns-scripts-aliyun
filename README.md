@@ -15,6 +15,7 @@ DDNS 版本：2.8.2-r64
 确保已安装以下组件：
 - `ddns-scripts`：DDNS 核心组件
 - `ddns-scripts-aliyun`：阿里云 DNS 专用脚本
+- `ddns-scripts-aliyun` 依赖 `openssl-util`、`cURL`
 
 ### 脚本路径
 
@@ -37,6 +38,11 @@ sh -n /usr/lib/ddns/update_aliyun_com.sh
 - **有错误提示**：请检查脚本完整性或重新安装组件
 
 ## 设备配置
+
+### 界面设置
+第一个域名填写子域名(需要更新的域名)如：`ly.test.com`
+
+第二个域名填写主域名如：`test.com`
 
 ### 1. 本路由设置
 
